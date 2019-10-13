@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+{% block main %}
+<div class="container">
+  <table class="table">
+      <thead>
+        <tr>
+          <th>Uploaded Files</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for file in filenames %}
+          <tr>
+            <form action="{{ url_for('download_file') }}" method="post">
+              <td>
+                <div class="form-group">
+                  <input type="hidden" name="fileName" value="{{ file }}">
+                  <label for="{{ file }}">{{ file }}</label>
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <button class="btn btn-primary" type="submit" name="button">Download</button>
+                </div>
+              </td>
+              </form>
+              <form action="{{ url_for('delete_file') }}" method="post">
+                <td>
+                  <div class="form-group">
+                    <input type="hidden" name="fileName" value="{{ file }}">
+                    <button class="btn btn-danger" name="del_button" type="submit">Delete</button>
+                  </div>
+                </td>
+              </form>
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
+<form action = "{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+  <div class="form-group">
+      <input type="file" name="fileToUpload"/>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-default" type="submit" name="Submit">Upload File</button>
+  </div>
+</form>
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Share Folder</button>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Share Folder</h4>
+          </div>
+          <div class="modal-body">
+            <form action="{{ url_for('shareFolder') }}" method="post">
+              <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="email_id" placeholder="Email of User to Share" type="email" id="inputEmail"
+                required/>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-default" type="submit" name="button">Share</button>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+{% endblock %}

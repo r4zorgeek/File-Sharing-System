@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block title %}
+  Student Index
+{% endblock %}
+{% block main %}
+<div class="container">
+  <table class="table">
+      <thead>
+        <tr>
+          <th>Files</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for file in filenames %}
+          <tr>
+            <form action="{{ url_for('download_file') }}" method="post">
+              <td>
+                <div class="form-group">
+                  <input type="hidden" name="fileName" value="{{ file }}">
+                  <label for="{{ file }}">{{ file }}</label>
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <button class="btn btn-primary" type="submit" name="button">Download</button>
+                </div>
+              </td>
+              </form>
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
+
+{% endblock %}

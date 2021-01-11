@@ -60,12 +60,16 @@ def index_stud():
     if not result:
         return render_template('index_stud.html')
     else:
-        result = result[0]['folder_id']
-        session['folder_id'] = result
-        fileList = list()
-        # list all files in the directory
-        for filename in os.listdir(UPLOAD_FOLDER + "/{}".format(result)):
-            fileList.append(filename)
+        fileList = []
+        for row in result:
+            for filename in os.listdir(app.config['UPLOAD_FOLDER'] + "/{}".format(row['folder_id'])):
+                fileList.append(filename)
+        # result = result[0]['folder_id']
+        # session['folder_id'] = result
+        # fileList = list()
+        # # list all files in the directory
+        # for filename in os.listdir(UPLOAD_FOLDER + "/{}".format(result)):
+        #     fileList.append(filename)
 
     return render_template('index_stud.html', filenames = fileList)
 
